@@ -12,10 +12,13 @@ img {
 }
 
 .cssBackgroundImg {
-  background-image: url(../img/cat-01.jpg);
+  background-image: url(../img/logo1.png);
 }
 .cssBackgroundImg:hover {
-  background-image: url(../img/cat-02.jpg);
+  background-image: url(../img/logo1-unbrand1.png);
   cursor:crosshair;
+}
+
+h1 {font-family: 'Paytone One', sans-serif;
 }
 
