@@ -63,7 +63,7 @@ Examples: [Haiku (xtine)](https://omundy.github.io/critical-web-design-book/06-o
 This chapter prompt leads you to continue the work in chapter 7 by designing and coding an interactive album generator application. These exercises model the generative design prompt that follows at the end of the chapter: to create a web page that can generate new iterations of itself based on some changeable data source, like user input, time, location, etc.
 
 Examples: [AI Albers](https://omundy.github.io/critical-web-design-book/08-generative-design/examples/ai-albers.html) |
-[After Jean Arp](https://omundy.github.io/critical-web-design-book/08-generative-design/examples/after-arp.html)
+[After Jean Arp](https://omundy.github.io/critical-web-design-book/08-generative-design/examples/after-jean-arp)
 
 
 <img height="220" src="figures/ch8/_sourcefiles/_examples/ch8-album-stretch-goodness.png">
@@ -78,5 +78,9 @@ Examples: [AI Albers](https://omundy.github.io/critical-web-design-book/08-gener
 TBD
 
 ## Chapter 10 - Design & Power
+
+TBD
+
+## Chapter 11 - Distribution
 
 TBD
