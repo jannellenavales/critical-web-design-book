@@ -40,7 +40,6 @@
 
         .svg {
             width: 100%;
-            height: 100%;
         }
 
         svg {
@@ -173,10 +172,10 @@
             pauseInterval = wordInterval * .03
 
         SVG.on(document, 'DOMContentLoaded', function () {
-            let w = 1200, h = w;
+            // let w = 1200, h = w;
             var draw = SVG().addTo('.container')
-                // .size('100%', '100%')
-                .size(w, h)
+                .size('100%', '100%')
+            // .size(w, h)
             const text = document.querySelector(".text");
             setInterval(function () {
                 if (word < words.length) {
@@ -189,35 +188,34 @@
                 }
             }, wordInterval)
 
+
             function drawSVG() {
+                // tests
                 // var rect = draw.rect(100, 100).attr({ fill: '#f06' })
                 // polygon.plot([[0,0], [100,50], [50,100], [150,50], [200,50]])
+
+                // draw polygon
                 var polygon = draw.polygon('0,0').fill('none').attr({ fill: '#f06' })
+                // create a random polygon w/{count} corners
+                let count = randomInt(3, 8);
 
-                let xAxis = [.1, .2, .4, .7, .8, .8, .7, .4, .2, .1]
-                let yAxis = [.4, .7, .8, .8, .7, .4, .2, .1, .1, .2]
-
-                let points = randomInt(3, 8)
-                let plot1 = [];
-                let plot2 = [];
-                for (let i = 0; i < points; i++) {
-                    let x, y
-                    let index = Math.floor(i / (points * .1))
-                    // console.log(index)
-                    x = randomInt(w * xAxis[index], w * (xAxis[index] + .1))
-                    y = randomInt(h * yAxis[index], h * (yAxis[index] + .1))
-                    // console.log(x, y)                
-                    plot1.push([x, y])
-                    plot2.push([x += Math.random() * 25, y += Math.random() * 25])
+                let w = window.innerWidth, h = window.innerHeight;
+                let poly1 = getRandomBox(w * .1, h * .1, 4);
+                // let poly1 = getRandomPolygon(w * .1, h * .1, 4);
+                console.log(JSON.stringify(poly1))
+                // create a second, slightly different, to animate the points of the first
+                let poly2 = [];
+                for (let i = 0; i < poly1.length; i++) {
+                    poly2.push([poly1[i][0] += Math.random() * 25, poly1[i][1] += Math.random() * 25])
                 }
-                // console.log(plot1)
+                // console.log(poly1)
                 let { r, g, b } = randomRgb([100, 255], [100, 255], [100, 255])
                 let rotatation = Math.random() * 360;
                 // console.log(`rgb(${r},${g},${b})`)
                 polygon
-                    .plot(plot1).attr({ fill: `rgba(${r},${65},${b}, .2)` }).opacity(0)
+                    .plot(poly1).attr({ fill: `rgba(${r},${65},${b}, .2)` }).opacity(0)
                     .transform({ rotate: rotatation, origin: 'center' }, true)
-                    .animate(2000).plot(plot2).opacity(1)
+                    .animate(2000).plot(poly2).opacity(1)
 
                 rotatation = Math.random() * -15;
                 if (Math.random() > .5) rotatation = Math.abs(rotatation);

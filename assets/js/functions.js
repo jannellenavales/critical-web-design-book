@@ -145,6 +145,35 @@ function sortArray(arr) {
 	});
 }
 
+/////////////////////////////////////////////
+///////////////// DRAWING ///////////////////
+/////////////////////////////////////////////
+
+/**
+ *  Return random box points
+ *  - defines random points between inner and outer box
+ *  - bounds default to 100x100, uses w,h to scale
+ *
+ *  0,0 --------- 1,0
+ *   |  1,1 - 1,8  |
+ *   |  |       |  |
+ *   |  8,1 - 8,8  |
+ *  0,1 --------- 1,1
+ */
+function getRandomBox(w = 10, h = 10, count = 4) {
+	let xAxis = [1, 2, 4, 7, 8, 8, 7, 4, 2, 1];
+	let yAxis = [4, 7, 8, 8, 7, 4, 2, 1, 1, 2];
+	let points = [];
+	for (let i = 0; i < count; i++) {
+		let x, y;
+		let index = Math.floor(i / (count * 0.1));
+		x = randomInt(w * xAxis[index], w * (xAxis[index] + 0.1));
+		y = randomInt(h * yAxis[index], h * (yAxis[index] + 0.1));
+		// console.log("getRandomBox()", index, x, y);
+		points.push([x, y]);
+	}
+	return points;
+}
 /**
  *  Get the hash from the current URL (minus the hash)
  */
