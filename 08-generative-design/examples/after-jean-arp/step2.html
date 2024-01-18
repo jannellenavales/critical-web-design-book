@@ -6,7 +6,7 @@
     <title>After Jean Arp</title>
 
     <!-- 
-    Title: After Jean Arp
+    Title: After Jean Arp - Module 2 (finished) / Module 3 (start)
     References: https://www.moma.org/collection/works/37013
     Author: Owen Mundy
     Date: 2023
@@ -43,30 +43,24 @@
     <script src="../../../assets/js/palette.js"></script>
     <script src="../../../assets/js/functions.js"></script>
     <script>
-        let svg = document.querySelector("svg")
 
-        function reset(c) {
-            svg.innerHTML = "";
-            document.body.style.backgroundColor = c;
-        }
+        // global
+        let svg = document.querySelector("svg");
 
+
+
+        // generate
         function generate() {
-            // create colors
-            let colors = [], colorsCount = randomInt(6, 10);
-            for (let i = 0; i < colorsCount; i++) {
-                colors.push(PALETTE_ARR.random())
-            }
-            // remove one color for the background
-            let bgColor = colors.splice(0, 1);
-            reset(bgColor);
-            // number of squares
-            let squaresCount = randomInt(6, 10);
-            // create squares
-            for (let i = 0; i < squaresCount; i++) {
-                let w = randomInt(80, 130),
+            let output = '';
+            let colors = getColors();
+            let count = randomInt(6, 10);
+            let winW = window.innerWidth,
+                winH = window.innerHeight;
+            for (let i = 0; i < count; i++) {
+                let x = randomInt(winW * .2, winW * .7),
+                    y = randomInt(winH * .2, winH * .7),
+                    w = randomInt(80, 130),
                     h = randomInt(80, 130),
-                    x = randomInt(window.innerWidth * .2, window.innerWidth * .8),
-                    y = randomInt(window.innerHeight * .2, window.innerHeight * .8),
                     // min/max scale
                     min = .9,
                     max = 1.1;
@@ -81,15 +75,40 @@
                 ]
                 // console.log(points)
                 // display
-                svg.insertAdjacentHTML('beforeend',
+                output +=
                     ` <polygon fill="${colors.random()}" stroke="none" 
                         points="${points.join(" ")}" 
-                        transform ="rotate(${randomInt(-3, 3)})" />`);
+                        transform ="rotate(${randomInt(-3, 3)})" />`
             }
+            // display
+            svg.innerHTML = output;
         }
-        generate();
 
+        // listeners
+        window.addEventListener("load", generate);
         document.addEventListener("click", generate);
+
+        // helpers
+        function randomInt(min = 1, max = 100) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        function getColors() {
+            let colors = [],
+                count = randomInt(6, 10);
+            for (let i = 0; i < count; i++) {
+                // colors.push(randomHex())
+                colors.push(PALETTE_ARR.random())
+            }
+            // remove one color for the background
+            document.body.style.backgroundColor = colors.splice(0, 1);
+            return colors;
+        }
+
+
+
+        function randomHex() {
+            return "#" + Math.floor(Math.random() * 16777215).toString(16);
+        }
 
     </script>
 

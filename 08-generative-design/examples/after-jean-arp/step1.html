@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>After Jean Arp</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>After Jean Arp - 8.2-start</title>
 
     <!-- 
-    Title: After Jean Arp
+    Title: After Jean Arp - Module 1 (finished) / Module 2 (start)
     References: https://www.moma.org/collection/works/37013
     Author: Owen Mundy
     Date: 2023
@@ -13,42 +14,59 @@
     -->
 
     <style>
-        html,
+        /* html,
         body {
-            background-color: #c9c9c8;
-        }
-
-        main * {
-            position: absolute;
-        }
+            background-color: #22252C;
+        }*/
     </style>
 </head>
 <body>
 
     <main></main>
 
-    <script src="../../../assets/js/functions.js"></script>
     <script>
-        let main = document.querySelector("main")
 
-        // create colors
-        let colors = [], colorsCount = randomInt(8, 12);
-        for (let i = 0; i < colorsCount; i++) {
-            colors.push(randomHex())
-        }
-        // create squares
-        let squaresCount = randomInt(6, 12);
-        for (let i = 0; i < squaresCount; i++) {
-            let style = [
-                `width:${randomInt(100, 300)}px`,
-                `height:${randomInt(100, 300)}px`,
-                `left:${randomInt(0, window.innerWidth-250)}px`,
-                `top:${randomInt(0, window.innerHeight-250)}px`,
-                `background-color:${colors.random()}`,
-            ]
+        // global
+        let ele = document.querySelector("main");
+
+        // generate
+        function generate() {
+            let output = '';
+            let count = randomInt(6, 12);
+            let winW = window.innerWidth,
+                winH = window.innerHeight;
+            for (let i = 0; i < count; i++) {
+                let style = [
+                    `position: absolute`,
+                    `left: ${randomInt(winW * .1, winW * .7)}px`,
+                    `top: ${randomInt(winH * .1, winH * .7)}px`,
+                    `width: ${randomInt(winW * .1, winW * .3)}px`,
+                    `height: ${randomInt(winH * .1, winH * .3)}px`,
+                    `transform: rotate(${randomInt(-1,1)}deg)`,
+                    `background-color:${randomHex()}`,
+                ]
+                output += `<div style="${style.join(";")}"></div>`;
+            }
             // display
-            main.insertAdjacentHTML('beforeend', `<div style="${style.join(";")}"></div>`);
+            ele.innerHTML = output;
         }
+
+        // helpers
+        function randomInt(min = 1, max = 100) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        function randomHex() {
+            let hex = "", chars = "0123456789abcdef";
+            for (let i = 0; i < 6; i++) {
+                hex += chars[randomInt(0, chars.length)];
+            }
+            return "#" + hex;
+        }
+
+        // listeners
+        window.addEventListener("load", generate);
+        document.addEventListener("click", generate);
+
 
     </script>
 

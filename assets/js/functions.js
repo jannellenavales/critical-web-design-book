@@ -4,10 +4,25 @@
  *  See license in repository
  */
 
+/////////////////////////////////////////////
+///////////////// RANDOM ////////////////////
+/////////////////////////////////////////////
+
+/**
+ *  Round a number to n decimal places
+ *  - Credit: https://stackoverflow.com/a/48764436/441878
+ */
+function round(num, decimalPlaces = 0) {
+	var p = Math.pow(10, decimalPlaces);
+	return Math.round(num * p) / p;
+}
 /**
  *  Return a random number between min (inclusive) and max (exclusive)
+ *  Credit: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
  */
 function randomNumber(min, max) {
+	min = Number(min);
+	max = Number(max);
 	return Math.random() * (max - min) + min;
 }
 /**
@@ -18,28 +33,30 @@ function randomFloat(min = 0, max = 1) {
 }
 /**
  *  Return a random integer between min (inclusive) and max (inclusive)
+ *  Credit: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
  */
-function randomInt(min = 0, max = 1) {
-	return parseInt(Math.floor(Math.random() * (max - min + 1)) + min);
+function randomInt(min, max) {
+	min = Math.ceil(min);
+	max = Math.floor(max);
+	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 /**
  *  Return a random rgb color
  */
 function randomRgb(r = [0, 255], g = [0, 255], b = [0, 255]) {
 	return {
-		r: randomFloat(r[0],r[1]),
-		g: randomFloat(g[0],g[1]),
-		b: randomFloat(b[0],b[1]),
+		r: randomInt(r[0], r[1]),
+		g: randomInt(g[0], g[1]),
+		b: randomInt(b[0], b[1]),
 	};
 }
 /**
  *  Return a random hex color
  */
 function randomHexFromString() {
-	let chars = "0123456789abcdef";
-	let hex = "";
-	for (let i = 0; i <= 6; i++) {
-		hex += chars[Math.floor(Math.random() * chars.length)];
+	let hex = "", chars = "0123456789abcdef";
+	for (let i = 0; i < 6; i++) {
+		hex += chars[randomInt(0, chars.length)];
 	}
 	return hex;
 }
@@ -48,7 +65,7 @@ function randomHexFromString() {
  *  https://gomakethings.com/a-better-way-to-generate-a-random-color-with-vanilla-js/
  */
 function randomHex() {
-    return "#" + Math.floor(Math.random() * 16777215).toString(16);
+	return "#" + Math.floor(Math.random() * 16777215).toString(16);
 }
 /**
  *  Return a random index from the array
@@ -129,11 +146,11 @@ function populateArrayRandomIntUnique(min, max, length) {
  *  Shuffle an array - credit https://stackoverflow.com/a/12646864/441878
  */
 function shuffleArray(_arr) {
-    for (let i = _arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [_arr[i], _arr[j]] = [_arr[j], _arr[i]];
-    }
-    return _arr;
+	for (let i = _arr.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[_arr[i], _arr[j]] = [_arr[j], _arr[i]];
+	}
+	return _arr;
 }
 
 /**
@@ -174,6 +191,59 @@ function getRandomBox(w = 10, h = 10, count = 4) {
 	}
 	return points;
 }
+
+/**
+ *  Return random polygon points
+ *  - defines random points around a circle
+ *  - bounds default to 100x100, uses w,h to scale
+ */
+function getRandomPolygon(w = 10, h = 10, count = 4) {
+	let angles = [];
+	// create angles first so to sort
+	for (let i = 0; i < count; i++) {
+		var angle = 2 * Math.PI * (i / count) + randomFloat(-0.01, 0.01);
+		angles.push(angle);
+	}
+	angles.sort();
+	// console.log(JSON.stringify(angles));
+
+	let r = ((w + h) / 2) * 5,
+		cx = w * 5,
+		cy = h * 5;
+
+	let points = [];
+	for (let i = 0; i < angles.length; i++) {
+		let x = round(cx + r * Math.cos(angles[i]), 2);
+		let y = round(cy + r * Math.sin(angles[i]), 2);
+		console.log("getRandomPolygon()", x, y);
+		points.push([x, y]);
+	}
+	// console.log(JSON.stringify(points));
+	return points;
+}
+
+/**
+ *  Return random polygon points (with offset)
+ *  - defines random points around a circle
+ *  - bounds default to 100x100, uses w,h to scale
+ */
+function getPolygonWithOffset(w, h, x, y, min, max) {
+	// create points to define polygon [x1,y1 x2,y2 x3,y3 x4,y4]
+	// select random point [x,y] within min/max, then offset from x,y
+	let points = [
+		`${x - randomInt(w * min, w * max)},${y - randomInt(h * min, h * max)}`,
+		`${x + randomInt(w * min, w * max)},${y - randomInt(h * min, h * max)}`,
+		`${x + randomInt(w * min, w * max)},${y + randomInt(h * min, h * max)}`,
+		`${x - randomInt(w * min, w * max)},${y + randomInt(h * min, h * max)}`,
+	];
+	console.log("getPolygonWithOffset()", JSON.stringify(points));
+	return points;
+}
+
+/////////////////////////////////////////////
+/////////////// ENVIRONMENT /////////////////
+/////////////////////////////////////////////
+
 /**
  *  Get the hash from the current URL (minus the hash)
  */

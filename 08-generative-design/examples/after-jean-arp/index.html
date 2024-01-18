@@ -37,7 +37,6 @@
             z-index: 999;
             background-color: rgba(255, 255, 255, .1);
             color: #ccc;
-            font-size: 14px;
             padding: 5px;
             margin: 12px;
             border-radius: 3px;
@@ -47,13 +46,15 @@
             margin: 0;
             margin-top: 6px;
             font-weight: normal;
+            font-size: 12px;
         }
 
         .controls label {
             display: inline-block;
             width: 1.6rem;
-            text-align: right;
+            text-align: left;
             padding-right: 3px;
+            font-size: 12px;
         }
 
         .controls .val {
@@ -79,7 +80,15 @@
             --range-border: 2px;
         }
 
-        /* Source(s)
+        select {
+            background-color: var(--range-background);
+            border-radius: 1rem;
+            padding: 2px 5px;
+        }
+
+
+        /* Improve range input
+        Source(s)
         https://blog.logrocket.com/creating-custom-css-range-slider-javascript-upgrades/ 
         https://range-input-css.netlify.app/
         */
@@ -144,18 +153,20 @@
 
     <section class="controls"></section>
 
-    <svg height="100%" xmlns="http://www.w3.org/2000/svg" version="1.1"></svg>
+    <!-- SVG height always fits the element, while viewbox 100 100 makes all numbers relative to % -->
+    <svg height="100%" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 100 100" version="1.1"></svg>
 
     <script src="../../../assets/js/palette.js"></script>
     <script src="../../../assets/js/functions.js"></script>
     <script type="module">
         let svg = document.querySelector("svg")
-
+        let colors = []
 
         // https://www.arrow-js.com/
         // https://marketplace.visualstudio.com/items?itemName=bierner.lit-html
         import { reactive, watch, html } from 'https://esm.sh/@arrow-js/core';
-        // Start your app here!
+
+
 
         // color range
         // rotation range
@@ -163,39 +174,40 @@
         // add text option
         // add objects (to reuse settings)
         // clamp width
-        let params = reactive({
-            obj: {
-                count: {
-                    min: 6,
-                    max: 10
-                },
-                colors: {
-                    min: 6,
-                    max: 10
-                },
-                scale: {
-                    min: .9,
-                    max: 1.1
-                },
-                points: {
-                    min: 4,
-                    max: 4
-                }
+        let state = reactive({
+            // object count
+            count: {
+                min: 6,
+                max: 10
             },
-            cx: window.innerWidth / 2,
-            cy: window.innerHeight / 2,
+            // object scale
+            scale: {
+                min: .9,
+                max: 1.1
+            },
+            // points in object
+            points: {
+                min: 4,
+                max: 4
+            },
+            // number of colors
+            colors: {
+                min: 6,
+                max: 10
+            },
+            // object position
             spread: {
                 x: .8,
                 y: .8
             },
+            // window size
+            // cx: window.innerWidth / 2,
+            // cy: window.innerHeight / 2,
+            cx: 50,
+            cy: 50,
+            // log to console 
             debug: true
         });
-
-        function checkValues() {
-            params.obj.count.min = Math.min(params.obj.count.min, params.obj.count.max)
-            params.obj.count.max = Math.max(params.obj.count.min, params.obj.count.max)
-            // generate()
-        }
 
         const appElement = document.querySelector('.controls');
 
@@ -204,128 +216,130 @@
             <div>
                 <label for="minCount">min</label>
                 <input type="range" id="minCount" min="1" max="30" step="1" 
-                    @input="${e => { params.obj.count.min = e.target.value }}" value="${() => params.obj.count.min}">
-                <input type="text" id="minCountDisplay" value="${() => params.obj.count.min}" class="val">
+                    @input="${e => { state.count.min = e.target.value }}" value="${state.count.min}">
+                <input type="text" id="minCountDisplay" value="${() => state.count.min}" class="val">
             </div>
             <div>
                 <label for="maxCount">max</label>
                 <input type="range" id="maxCount" min="1" max="30" step="1"  
-                    @input="${e => { params.obj.count.max = e.target.value }}" value="${() => params.obj.count.max}">
-                <input type="text" id="maxCountDisplay" value="${() => params.obj.count.max}" class="val">
+                    @input="${e => { state.count.max = e.target.value }}" value="${state.count.max}">
+                <input type="text" id="maxCountDisplay" value="${() => state.count.max}" class="val">
             </div>
 
             <h5>Colors</h5>
             <div>
                 <label for="minColors">min</label>
                 <input type="range" id="minColors" min="1" max="${PALETTE_ARR.length}" step="1" 
-                    @input="${e => { params.obj.colors.min = e.target.value }}" value="${params.obj.colors.min}">
-                <input type="text" id="minColorsDisplay" value="${() => params.obj.colors.min}" class="val">
+                    @input="${e => { state.colors.min = e.target.value }}" value="${state.colors.min}">
+                <input type="text" id="minColorsDisplay" value="${() => state.colors.min}" class="val">
             </div>
             <div>
                 <label for="maxColors">max</label>
                 <input type="range" id="maxColors" min="1" max="${PALETTE_ARR.length}" step="1"  
-                    @input="${e => { params.obj.colors.max = e.target.value }}" value="${params.obj.colors.max}">
-                <input type="text" id="maxColorsDisplay" value="${() => params.obj.colors.max}" class="val">
+                    @input="${e => { state.colors.max = e.target.value }}" value="${state.colors.max}">
+                <input type="text" id="maxColorsDisplay" value="${() => state.colors.max}" class="val">
             </div>
 
             <h5>Scale</h5>
             <div>
                 <label for="minScale">min</label>
                 <input type="range" id="minScale" min=".1" max="5.0" step="0.1" 
-                    @input="${e => { params.obj.scale.min = e.target.value }}" value="${params.obj.scale.min}">
-                <input type="text" id="minScaleDisplay" value="${() => params.obj.scale.min}" class="val">
+                    @input="${e => { state.scale.min = e.target.value }}" value="${state.scale.min}">
+                <input type="text" id="minScaleDisplay" value="${() => state.scale.min}" class="val">
             </div>
             <div>
                 <label for="maxScale">max</label>
                 <input type="range" id="maxScale" min=".1" max="5.0" step="0.1" 
-                    @input="${e => { params.obj.scale.max = e.target.value }}" value="${params.obj.scale.max}">
-                <input type="text" id="maxScaleDisplay" value="${() => params.obj.scale.max}" class="val">            
+                    @input="${e => { state.scale.max = e.target.value }}" value="${state.scale.max}">
+                <input type="text" id="maxScaleDisplay" value="${() => state.scale.max}" class="val">            
             </div>
 
             <h5>Position</h5>
             <div>
                 <label for="xSpread">x</label>
                 <input type="range" id="xSpread" min=".0" max="1.0" step="0.1" 
-                    @input="${e => { params.spread.x = e.target.value }}" value="${params.spread.x}">
-                <input type="text" id="xSpreadDisplay" value="${() => params.spread.x}" class="val">
+                    @input="${e => { state.spread.x = e.target.value }}" value="${state.spread.x}">
+                <input type="text" id="xSpreadDisplay" value="${() => state.spread.x}" class="val">
             </div>
             <div>
                 <label for="ySpread">y</label>
                 <input type="range" id="ySpread" min=".0" max="1.0" step="0.1" 
-                    @input="${e => { params.spread.y = e.target.value }}" value="${params.spread.y}">
-                <input type="text" id="ySpreadDisplay" value="${() => params.spread.y}" class="val">
+                    @input="${e => { state.spread.y = e.target.value }}" value="${state.spread.y}">
+                <input type="text" id="ySpreadDisplay" value="${() => state.spread.y}" class="val">
             </div>
-
         `
         template(appElement)
         // watch all vars
         watch(generate)
 
         function debug() {
-            if (params.debug) {
-                // console.log(`params: ${JSON.stringify(params)}`);
+            if (state.debug) {
+                console.log(`state: ${JSON.stringify(state)}`);
             }
         }
         // turn on debugging
         watch(debug)
-
-
         // Arrow ^
 
-        function reset(c) {
-            svg.innerHTML = "";
-            document.body.style.backgroundColor = c;
-        }
-
-
-
-        function generate() {
-            console.log(`params: ${JSON.stringify(params)}`);
+        function setup(c) {
             // create colors
-            let colors = [], colorsCount = randomInt(params.obj.colors.min, params.obj.colors.max);
+            colors = [];
+            let colorsCount = randomInt(state.colors.min, state.colors.max);
             for (let i = 0; i < colorsCount; i++) {
                 colors.push(PALETTE_ARR.random())
             }
-            // console.log(params.obj.colors.min, params.obj.colors.max, colorsCount, colors)
             // remove one color for the background
             let bgColor = colors.splice(0, 1);
-            // reset(bgColor);
-            reset("#212121")
-            // number of squares
-            let squaresCount = randomInt(params.obj.count.min, params.obj.count.max);
-            // create squares
-            for (let i = 0; i < squaresCount; i++) {
-                let w = randomInt(80, 130),
-                    h = randomInt(80, 130),
-                    x = randomInt(params.cx - (params.cx * params.spread.x) / 2, params.cx + (params.cx * params.spread.x) / 2),
-                    y = randomInt(params.cy - (params.cy * params.spread.y) / 2, params.cy + (params.cy * params.spread.y) / 2),
-                    // min/max scale
-                    min = params.obj.scale.min,
-                    max = params.obj.scale.max;
-
-                // create points to define polygon [x1,y1 x2,y2 x3,y3 x4,y4] offset from x,y
-                let points = [
-                    `${x - randomInt(w * min, w * max)},${y - randomInt(h * min, h * max)}`,
-                    `${x + randomInt(w * min, w * max)},${y - randomInt(h * min, h * max)}`,
-                    `${x + randomInt(w * min, w * max)},${y + randomInt(h * min, h * max)}`,
-                    `${x - randomInt(w * min, w * max)},${y + randomInt(h * min, h * max)}`,
-                ]
-                // console.log(points)
-                // display
-                svg.insertAdjacentHTML('beforeend',
-                    ` <polygon fill="${colors.random()}" stroke="none" 
-                        points="${points.join(" ")}" transform="rotate(${randomInt(-3, 3)})" />`
-                    // +
-                    // ` <text fill="${colors.random()}" stroke="none" 
-                    // x="${x}" y="${y}" style="font-size: ${randomInt(params.obj.scale.min*55, params.obj.scale.max*155)}" transform="rotate(${randomInt(-3, 3)})">Hi</text>`    
-
-                );
-            }
+            document.body.style.backgroundColor = "#212121";
         }
-        generate();
 
+        // setInterval(generate, 1000)
+
+        function generate() {
+            setup()
+            let output = '';
+            // number of squares
+            let count = randomInt(state.count.min, state.count.max);
+            // create squares
+            for (let i = 0; i < count; i++) {
+                // w,h of bounding box
+                let w = randomInt(8.0, 13.0),
+                    h = randomInt(8.0, 13.0),
+                    // x,y position in viewport
+                    x = randomInt(state.cx - (state.cx * state.spread.x) / 2, state.cx + (state.cx * state.spread.x) / 2),
+                    y = randomInt(state.cy - (state.cy * state.spread.y) / 2, state.cy + (state.cy * state.spread.y) / 2),
+                    // min,max scale
+                    min = state.scale.min,
+                    max = state.scale.max;
+                // console.log("🦄", h, x, y, min, max)
+
+
+                // get element to insert
+                let insert = '';
+
+                // let count = randomInt(3, 8);
+                // let points = getRandomBox(w, h, 4);
+                // let points = getRandomPolygon(w, h, 4);
+                let points = getPolygonWithOffset(w, h, x, y, min, max);
+
+                // output =+ = ` 
+                //         <polygon fill="${colors.random()}" stroke="none" 
+                //         points="${points.join(" ")}" transform="rotate(${randomInt(-3, 3)})" />
+                //         `
+
+                output +=  `<text 
+                            fill="${colors.random()}" stroke="none" 
+                            x="${x}" y="${y}" transform="rotate(${randomInt(-3, 3)})"
+                            style="font-size: ${randomInt(state.scale.min * 55, state.scale.max * 155)}">${1}</text>`;
+
+            }
+            // display
+            svg.innerHTML = output;
+        }
+
+        // listeners
+        window.addEventListener("load", generate);
         svg.addEventListener("click", generate);
-        // if resized
         window.addEventListener("resize", generate);
 
 
@@ -336,18 +350,19 @@
             <div>
                 <label for="minPoints">min</label>
                 <input type="range" id="minPoints" min="1" max="50" step="1" 
-                    @input="${e => { params.obj.points.min = e.target.value }}" value="${params.obj.points.min}">
+                    @input="${e => { state.points.min = e.target.value }}" value="${state.points.min}">
                 <label for="minPointsDisplay" hidden>min</label>
-                <input type="text" id="minPointsDisplay" value="${() => params.obj.points.min}" class="val">
+                <input type="text" id="minPointsDisplay" value="${() => state.points.min}" class="val">
             </div>
             <div>
                 <label for="maxPoints">max</label>
                 <input type="range" id="maxPoints" min="1" max="50" step="1"  
-                    @input="${e => { params.obj.points.max = e.target.value }}" value="${params.obj.points.max}">
+                    @input="${e => { state.points.max = e.target.value }}" value="${state.points.max}">
                 <label for="maxPointsDisplay" hidden>max</label>
-                <input type="text" id="maxPointsDisplay" value="${() => params.obj.points.max}" class="val">
+                <input type="text" id="maxPointsDisplay" value="${() => state.points.max}" class="val">
             </div>
             ` */
+
 
 
     </script>
