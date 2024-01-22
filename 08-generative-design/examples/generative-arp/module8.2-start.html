@@ -36,16 +36,16 @@
             let winW = window.innerWidth,
                 winH = window.innerHeight;
             for (let i = 0; i < count; i++) {
-                let style = [
-                    `position: absolute`,
-                    `left: ${randomInt(winW * .1, winW * .7)}px`,
-                    `top: ${randomInt(winH * .1, winH * .7)}px`,
-                    `width: ${randomInt(winW * .1, winW * .3)}px`,
-                    `height: ${randomInt(winH * .1, winH * .3)}px`,
-                    `transform: rotate(${randomInt(-1,1)}deg)`,
-                    `background-color:${randomHex()}`,
-                ]
-                output += `<div style="${style.join(";")}"></div>`;
+                let style = `
+                    position: absolute;
+                    left: ${randomInt(winW * .1, winW * .7)}px;
+                    top: ${randomInt(winH * .1, winH * .7)}px;
+                    width: ${randomInt(winW * .1, winW * .3)}px;
+                    height: ${randomInt(winH * .1, winH * .3)}px;
+                    transform: rotate(${randomInt(-1,1)}deg);
+                    background-color:${randomHex()};
+                `;
+                output += `<div style="${style}"></div>`;
             }
             // display
             ele.innerHTML = output;
