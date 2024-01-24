@@ -54,6 +54,11 @@ Examples: [Haiku (xtine)](https://omundy.github.io/critical-web-design-book/06-o
 
 ## Chapter 7 - Ethical Design
 
+Create an interactive feature that tells a story with data to accompany an article about the human impact of web accessibility. The idea should communicate 6 key statistics (%s) about accessibility while underscoring how non-accessible websites can exclude users with permanent or temporary disabilities. 
+
+Examples: 
+[Accessibility Data](https://omundy.github.io/critical-web-design-book/07-ethical-design/examples/accessibility-data)
+
 <img height="220" src="figures/ch7/_sourcefiles/_examples/ch7-outcome-accessibility-xl.png"> <img height="220" src="figures/ch7/_sourcefiles/_examples/ch7-outcome-accessibility-md.png"> <img height="220" src="figures/ch7/_sourcefiles/_examples/ch7-outcome-accessibility-sm.png"> 
 
 
@@ -62,13 +67,17 @@ Examples: [Haiku (xtine)](https://omundy.github.io/critical-web-design-book/06-o
 
 This chapter prompt leads you to continue the work in chapter 7 by designing and coding an interactive album generator application. These exercises model the generative design prompt that follows at the end of the chapter: to create a web page that can generate new iterations of itself based on some changeable data source, like user input, time, location, etc.
 
-Examples: [AI Albers](https://omundy.github.io/critical-web-design-book/08-generative-design/examples/ai-albers.html) |
-[After Jean Arp](https://omundy.github.io/critical-web-design-book/08-generative-design/examples/after-jean-arp)
+Examples: 
+[After Jean Arp](https://omundy.github.io/critical-web-design-book/08-generative-design/examples/after-jean-arp) |
+[AI Albers](https://omundy.github.io/critical-web-design-book/08-generative-design/examples/ai-albers.html) |
+[Band Name Generator](https://omundy.github.io/critical-web-design-book/08-generative-design/examples/band-name-generator) |
+[String Art Generator (Svelte)](https://omundy.github.io/critical-web-design-book/08-generative-design/examples/string-art-generator) |
+[Music Venue](https://omundy.github.io/critical-web-design-book/08-generative-design/examples/music-venue.html)
 
 
 <img height="220" src="figures/ch8/_sourcefiles/_examples/ch8-album-stretch-goodness.png">
 
-<img height="220" src="figures/ch8/_sourcefiles/_examples/ch7-outcome-venue-xl-1.png"> <img height="220" src="figures/ch8/_sourcefiles/_examples/ch7-outcome-venue-md-1.png"> <img height="220" src="figures/ch8/_sourcefiles/_examples/ch7-outcome-venue-sm-1.png"> 
+<img height="220" src="figures/ch8/_sourcefiles/_examples/music-venue-xl-1.png"> <img height="220" src="figures/ch8/_sourcefiles/_examples/music-venue-md-1.png"> <img height="220" src="figures/ch8/_sourcefiles/_examples/music-venue-sm-1.png">  <img height="220" src="figures/ch8/_sourcefiles/_examples/string-art-generator-5.png">   <img height="220" src="figures/ch8/_sourcefiles/_examples/band-name-default.png"> <img height="220" src="figures/ch8/_sourcefiles/_examples/08-boxes-5-svg-custom-palette.png"> 
 
 
 

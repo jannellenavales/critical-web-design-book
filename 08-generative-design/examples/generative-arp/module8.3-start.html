@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>After Jean Arp</title>
+    <title>After Jean Arp - 8.3-start</title>
 
     <!-- 
     Title: After Jean Arp - Module 2 (finished) / Module 3 (start)
@@ -23,92 +23,105 @@
         }
 
         svg {
-            width: 100%;
-            transform-box: fill-box;
-            transform-origin: 50% 50%;
+            /* background-color: red; */
+            /* transform-box: fill-box;
+            transform-origin: 50% 50%; */
         }
 
         svg polygon {
-            transform-box: fill-box;
+            /* transform-box: fill-box; */
             transform-origin: center;
         }
     </style>
 </head>
 <body>
 
-    <svg height="100%" xmlns="http://www.w3.org/2000/svg" version="1.1">
-    </svg>
+    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"></svg>
 
-
-    <script src="../../../assets/js/palette.js"></script>
-    <script src="../../../assets/js/functions.js"></script>
     <script>
 
         // global
-        let svg = document.querySelector("svg");
+        let ele = document.querySelector("svg");
 
+        // https://coolors.co/ff7b00-ff8800-ff9500-ffa200-ffaa00-ffb700-ffc300-ffd000-ffdd00-ffea00
+        let colors = ["f72585", "b5179e", "7209b7", "560bad", "480ca8", "3a0ca3", "3f37c9", "4361ee", "4895ef", "4cc9f0"];
 
+        // https://coolors.co/ff7b00-ff8800-ff9500-ffa200-ffaa00-ffb700-ffc300-ffd000-ffdd00-ffea00
+        colors = ["ff7b00", "ff8800", "ff9500", "ffa200", "ffaa00", "ffb700", "ffc300", "ffd000", "ffdd00", "ffea00"];
 
         // generate
         function generate() {
             let output = '';
-            let colors = getColors();
-            let count = randomInt(6, 10);
+            let count = randomInt(6, 12);
+
             let winW = window.innerWidth,
                 winH = window.innerHeight;
+
             for (let i = 0; i < count; i++) {
-                let x = randomInt(winW * .2, winW * .7),
-                    y = randomInt(winH * .2, winH * .7),
-                    w = randomInt(80, 130),
-                    h = randomInt(80, 130),
+                // parameters
+                let w = randomInt(winW * .05, winW * .12),
+                    h = randomInt(winH * .05, winH * .12),
+                    x = randomInt(winW * .2, winW * .8) - (w * .5),
+                    y = randomInt(winH * .2, winH * .8) - (h * .5),
                     // min/max scale
                     min = .9,
                     max = 1.1;
 
-                console.log(x, y)
-                // create points to define polygon [x1,y1 x2,y2 x3,y3 x4,y4] offset from x,y
-                let points = [
-                    `${x - randomInt(w * min, w * max)},${y - randomInt(h * min, h * max)}`,
-                    `${x + randomInt(w * min, w * max)},${y - randomInt(h * min, h * max)}`,
-                    `${x + randomInt(w * min, w * max)},${y + randomInt(h * min, h * max)}`,
-                    `${x - randomInt(w * min, w * max)},${y + randomInt(h * min, h * max)}`,
-                ]
-                // console.log(points)
-                // display
-                output +=
-                    ` <polygon fill="${colors.random()}" stroke="none" 
-                        points="${points.join(" ")}" 
-                        transform ="rotate(${randomInt(-3, 3)})" />`
+                // w = 100; h = 100
+                // x = 0; y = 0;
+
+                // output += `<circle r="${randomInt(5, 30)}" fill="${randomHex()}"
+                //         cx="${x}" cy="${y}"></circle> `;
+
+                // create points to define polygon [x1,y1 x2,y2 x3,y3 x4,y4] 
+                let points = `
+                    ${-randomInt(w * min, w * max)},${-randomInt(h * min, h * max)} 
+                    ${randomInt(w * min, w * max)},${-randomInt(h * min, h * max)} 
+                    ${randomInt(w * min, w * max)},${randomInt(h * min, h * max)} 
+                    ${-randomInt(w * min, w * max)},${randomInt(h * min, h * max)} 
+                    `;
+                output += `<polygon fill="#${randomFromArray(colors)}" 
+                            stroke="none" points="${points}" 
+                            transform ="translate(${x},${y}) rotate(${randomInt(-1, 1)})" />`
+
+
+
+                console.log(output)
             }
             // display
-            svg.innerHTML = output;
+            ele.innerHTML = output;
         }
-
-        // listeners
-        window.addEventListener("load", generate);
-        document.addEventListener("click", generate);
 
         // helpers
         function randomInt(min = 1, max = 100) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
-        function getColors() {
-            let colors = [],
-                count = randomInt(6, 10);
-            for (let i = 0; i < count; i++) {
-                // colors.push(randomHex())
-                colors.push(PALETTE_ARR.random())
-            }
-            // remove one color for the background
-            document.body.style.backgroundColor = colors.splice(0, 1);
-            return colors;
-        }
-
-
-
         function randomHex() {
-            return "#" + Math.floor(Math.random() * 16777215).toString(16);
+            let hex = "", chars = "0123456789abcdef";
+            for (let i = 0; i < 6; i++) {
+                hex += chars[randomInt(0, chars.length - 1)];
+            }
+            return "#" + hex;
         }
+        function randomFromArray(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+        // function fillArray(arr, count){
+        //     let newArr = []
+        //     let colors = [],
+        //         count = randomInt(6, 10);
+        //     for (let i = 0; i < count; i++) {
+        //         newArr.push(PALETTE_ARR.random())
+        //     }
+        //     // remove one color for the background
+        //     document.body.style.backgroundColor = colors.splice(0, 1);
+        //     return colors;
+        // }
+
+        // listeners
+        window.addEventListener("load", generate);
+        document.addEventListener("click", generate);
+
 
     </script>
 

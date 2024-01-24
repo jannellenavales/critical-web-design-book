@@ -13,12 +13,7 @@
     License: MIT
     -->
 
-    <style>
-        /* html,
-        body {
-            background-color: #22252C;
-        }*/
-    </style>
+    <style></style>
 </head>
 <body>
 
@@ -36,19 +31,25 @@
             let winW = window.innerWidth,
                 winH = window.innerHeight;
             for (let i = 0; i < count; i++) {
+                let w = randomInt(winW * .1, winW * .3),
+                    h = randomInt(winH * .1, winH * .3),
+                    x = randomInt(winW * .2, winW * .8) - (w * .5),
+                    y = randomInt(winH * .2, winH * .8) - (h * .5);
+
                 let style = `
                     position: absolute;
-                    left: ${randomInt(winW * .1, winW * .7)}px;
-                    top: ${randomInt(winH * .1, winH * .7)}px;
-                    width: ${randomInt(winW * .1, winW * .3)}px;
-                    height: ${randomInt(winH * .1, winH * .3)}px;
-                    transform: rotate(${randomInt(-1,1)}deg);
+                    transform: translate(${x}px,${y}px)
+                        rotate(${randomInt(-1, 1)}deg);
+                    width: ${w}px;
+                    height: ${h}px;
                     background-color:${randomHex()};
                 `;
-                output += `<div style="${style}"></div>`;
+                output += `<div style="${style}"></div>
+                `;
             }
             // display
             ele.innerHTML = output;
+            console.log(output);
         }
 
         // helpers
@@ -58,7 +59,7 @@
         function randomHex() {
             let hex = "", chars = "0123456789abcdef";
             for (let i = 0; i < 6; i++) {
-                hex += chars[randomInt(0, chars.length)];
+                hex += chars[randomInt(0, chars.length - 1)];
             }
             return "#" + hex;
         }
