@@ -68,16 +68,14 @@ Examples:
 This chapter prompt leads you to continue the work in chapter 7 by designing and coding an interactive album generator application. These exercises model the generative design prompt that follows at the end of the chapter: to create a web page that can generate new iterations of itself based on some changeable data source, like user input, time, location, etc.
 
 Examples: 
-[After Jean Arp](https://omundy.github.io/critical-web-design-book/08-generative-design/examples/after-jean-arp) |
+[Generative (Jean) Arp](https://omundy.github.io/critical-web-design-book/08-generative-design/examples/generative-arp) |
 [AI Albers](https://omundy.github.io/critical-web-design-book/08-generative-design/examples/ai-albers.html) |
 [Band Name Generator](https://omundy.github.io/critical-web-design-book/08-generative-design/examples/band-name-generator) |
-[String Art Generator (Svelte)](https://omundy.github.io/critical-web-design-book/08-generative-design/examples/string-art-generator) |
+[String Art Generator (Svelte)](https://omundy.github.io/critical-web-design-book/08-generative-design/examples/string-art-generator/dist) |
 [Music Venue](https://omundy.github.io/critical-web-design-book/08-generative-design/examples/music-venue.html)
 
 
-<img height="220" src="figures/ch8/_sourcefiles/_examples/ch8-album-stretch-goodness.png">
-
-<img height="220" src="figures/ch8/_sourcefiles/_examples/music-venue-xl-1.png"> <img height="220" src="figures/ch8/_sourcefiles/_examples/music-venue-md-1.png"> <img height="220" src="figures/ch8/_sourcefiles/_examples/music-venue-sm-1.png">  <img height="220" src="figures/ch8/_sourcefiles/_examples/string-art-generator-5.png">   <img height="220" src="figures/ch8/_sourcefiles/_examples/band-name-default.png"> <img height="220" src="figures/ch8/_sourcefiles/_examples/08-boxes-5-svg-custom-palette.png"> 
+<img height="220" src="figures/ch8/_sourcefiles/_examples/band-name-stretch-goodness.png"> <img height="220" src="figures/ch8/_sourcefiles/_examples/music-venue-xl-1.png"> <img height="220" src="figures/ch8/_sourcefiles/_examples/music-venue-md-1.png"> <img height="220" src="figures/ch8/_sourcefiles/_examples/music-venue-sm-1.png">  <img height="220" src="figures/ch8/_sourcefiles/_examples/string-art-generator-5.png">   <img height="220" src="figures/ch8/_sourcefiles/_examples/band-name-default.png"> <img height="220" src="figures/ch8/_sourcefiles/_examples/08-boxes-5-svg-custom-palette.png"> 
 
 
 
