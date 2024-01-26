@@ -3,16 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>After Jean Arp - 8.3-start</title>
+    <title>After Jean Arp - 8.2-finished</title>
 
     <!-- 
-    Title: After Jean Arp - Module 2 (finished) / Module 3 (start)
+    Title: After Jean Arp - Module 2 (finished)
     References: https://www.moma.org/collection/works/37013
     Author: Owen Mundy
     Date: 2023
     License: MIT
     -->
-
 
     <style>
         html,
@@ -27,27 +26,28 @@
             transform-origin: center;
         }
 
-.controls {
-    position: absolute;
-    z-index: 999;
-    background-color: rgb(24, 26, 31);
-    color: #ccc;
-    padding: 5px;
-    margin: 12px;
-    border-radius: 3px;
-}
-.controls label {
-    vertical-align: 4px;
-    font-family: system-ui;
-    font-size: 12px;
-}
+        .controls {
+            position: absolute;
+            z-index: 999;
+            background-color: rgb(24, 26, 31);
+            color: #ccc;
+            padding: 5px;
+            margin: 12px;
+            border-radius: 3px;
+        }
+
+        .controls label {
+            vertical-align: 4px;
+            font-family: system-ui;
+            font-size: 12px;
+        }
     </style>
 </head>
 <body>
 
     <section class="controls">
         <label for="count">count</label>
-        <input type="range" class="countControl" min="1" max="30" step="1" value="5">
+        <input type="range" id="count" min="1" max="30" step="1" value="5">
     </section>
 
     <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"></svg>
@@ -55,11 +55,12 @@
 
     <script>
 
-let countControl = document.querySelector(".countControl");
+let countEle = document.querySelector("#count");
+        countEle.addEventListener("input", generate);
 
 
         // global
-        let ele = document.querySelector("svg");
+        let viz = document.querySelector("svg");
 
         // https://coolors.co/ff7b00-ff8800-ff9500-ffa200-ffaa00-ffb700-ffc300-ffd000-ffdd00-ffea00
         let colors = ["f72585", "b5179e", "7209b7", "560bad", "480ca8", "3a0ca3", "3f37c9", "4361ee", "4895ef", "4cc9f0"];
@@ -71,7 +72,7 @@ let countControl = document.querySelector(".countControl");
         function generate() {
             let output = '';
             // let count = randomInt(6, 12);
-            let count = countControl.value;
+            let count = countEle.value;
 
             let winW = window.innerWidth,
                 winH = window.innerHeight;
@@ -103,7 +104,7 @@ let countControl = document.querySelector(".countControl");
                             transform ="translate(${x},${y}) rotate(${randomInt(-1, 1)})" />`
             }
             // display
-            ele.innerHTML = output;
+            viz.innerHTML = output;
             // console.log(output)
         }
 
@@ -125,8 +126,7 @@ let countControl = document.querySelector(".countControl");
 
         // listeners
         window.addEventListener("load", generate);
-        ele.addEventListener("click", generate);
-        countControl.addEventListener("input", generate)
+        viz.addEventListener("click", generate);
 
     </script>
 

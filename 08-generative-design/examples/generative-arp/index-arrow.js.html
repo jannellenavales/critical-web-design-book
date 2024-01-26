@@ -156,7 +156,7 @@
     <script src="../../../assets/js/palette.js"></script>
     <script src="../../../assets/js/functions.js"></script>
     <script type="module">
-        let svg = document.querySelector("svg")
+        let viz = document.querySelector("svg")
         let colors = []
 
         // https://www.arrow-js.com/
@@ -330,12 +330,12 @@
                             transform ="translate(${x},${y}) rotate(${randomInt(-3, 3)})" />`
             }
             // display
-            svg.innerHTML = output;
+            viz.innerHTML = output;
         }
 
         // listeners
         window.addEventListener("load", generate);
-        svg.addEventListener("click", generate);
+        viz.addEventListener("click", generate);
         window.addEventListener("resize", generate);
 
 
