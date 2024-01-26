@@ -28,11 +28,14 @@
         function generate() {
             let output = '';
             let count = randomInt(6, 12);
+
             let winW = window.innerWidth,
                 winH = window.innerHeight;
+
             for (let i = 0; i < count; i++) {
-                let w = randomInt(winW * .1, winW * .3),
-                    h = randomInt(winH * .1, winH * .3),
+                // parameters
+                let h = randomInt(winH * .1, winH * .3),
+                    w = randomInt(h * .8, h * 1.2),  
                     x = randomInt(winW * .2, winW * .8) - (w * .5),
                     y = randomInt(winH * .2, winH * .8) - (h * .5);
 
@@ -49,7 +52,7 @@
             }
             // display
             ele.innerHTML = output;
-            console.log(output);
+            // console.log(output);
         }
 
         // helpers
