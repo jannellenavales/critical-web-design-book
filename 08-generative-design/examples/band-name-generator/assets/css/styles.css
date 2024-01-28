@@ -1,11 +1,15 @@
 html,
 body {
+    width: 100%;
+    height: 100%;
     margin: 0;
     padding: 0;
     font-family: 'Roboto', sans-serif;
     background-color: rgb(19, 9, 50);
     color: aquamarine;
 }
+
+
 
 /* include padding in size of box */
 div {
@@ -83,6 +87,10 @@ ALIGN = Cross-axis item alignment
     flex: 1;
 }
 
+.waitUntilLoad {
+    display: none;
+}
+
 
 /* FRONT */
 
@@ -123,13 +131,15 @@ ALIGN = Cross-axis item alignment
     align-items: stretch;
     width: 120px;
     height: 120px;
-    margin: 2rem;
+    margin: 1rem;
     padding: 1.2rem;
     border-radius: 50%;
     text-align: center;
     color: white;
     transform: scale(.8) rotate(-25deg);
     display: flex;
+    background-color: tomato;
+    font-size: 1.15rem;
 }
 
 .price {
@@ -158,7 +168,7 @@ ALIGN = Cross-axis item alignment
 
 .albumBackOverlay {
     background-color: midnightblue;
-    opacity: .8;
+    opacity: .6;
     width: 100%;
     height: 100%;
     padding: 2rem 3rem;
@@ -227,17 +237,20 @@ button,
 select {
     background-color: aliceblue;
     border: none;
-    padding: .5rem;
-    margin: .5rem .3rem;
+    padding: .1rem .2rem;
+    margin: .3rem .2rem;
     border-radius: .2rem;
 }
 
 button {
-    margin-left: .8rem;
-    border-radius: .5rem;
+    margin-left: .5rem;
+    border-radius: .3rem;
     background-color: aquamarine;
 }
 
+.reload {
+    font-size: 1.5rem;
+}
 
 .lyrics {
     display: flex;

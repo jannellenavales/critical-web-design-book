@@ -43,18 +43,23 @@ function randomInt(min, max) {
 /**
  *  Return a random rgb color
  */
-function randomRgb(r = [0, 255], g = [0, 255], b = [0, 255]) {
+function randomRGB(r = [0, 255], g = [0, 255], b = [0, 255]) {
 	return {
 		r: randomInt(r[0], r[1]),
 		g: randomInt(g[0], g[1]),
 		b: randomInt(b[0], b[1]),
 	};
 }
+function randomRGBStr(r = [0, 255], g = [0, 255], b = [0, 255]) {
+	let color = randomRGB(r, g, b);
+	return `rgb(${color.r},${color.g},${color.b})`;
+}
 /**
  *  Return a random hex color
  */
 function randomHexFromString() {
-	let hex = "", chars = "0123456789abcdef";
+	let hex = "",
+		chars = "0123456789abcdef";
 	for (let i = 0; i < 6; i++) {
 		hex += chars[randomInt(0, chars.length)];
 	}
